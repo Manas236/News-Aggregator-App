@@ -1,3 +1,5 @@
+require('dotenv').config({ path: __dirname + '/.env' });
+
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -20,7 +22,8 @@ app.get('/top-headlines', async (req, res) => {
 
   try {
     const response = await axios.get(
-      `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=c05eb609601d4d9ebed6be6f67ef8889`
+      `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${process.env.NEWS_API_KEY}`     
+
     );
     res.json(response.data);
   } catch (error) {
@@ -32,4 +35,6 @@ app.get('/top-headlines', async (req, res) => {
 // Server Listening
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
+  console.log('Loaded API Key:', process.env.NEWS_API_KEY);
+
 });
